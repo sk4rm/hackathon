@@ -78,7 +78,7 @@ Returns:
 
 If the `id` does not exist, a HTTP 404 status code is returned.
 
-### GET /events/:id
+### GET /events
 
 Description:
 
