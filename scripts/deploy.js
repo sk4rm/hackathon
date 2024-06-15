@@ -1,15 +1,25 @@
-async function main() {
-    const greeterABI = await ethers.getContractFactory("Greeter");
-    const greeter = await greeterABI.deploy("Hello, Hardhat!");
-    console.log("Greeter deployed at:", greeter.address);
+const { ethers } = require("hardhat")
 
-    const greet = await greeter.greet();
-    console.log("Greet value:", greet);
+async function main() {
+    // const greeterABI = await ethers.getContractFactory("Greeter")
+    // const greeter = await greeterABI.deploy("Hello, Hardhat!")
+    // console.log("Greeter deployed at:", greeter.address)
+
+    // const greet = await greeter.greet()
+    // console.log("Greet value:", greet)
+
+    const Tick3tABI = await ethers.getContractFactory("Tick3t")
+    const Tick3t = await Tick3tABI.deploy()
+    console.log("Tick3t deployed at:", Tick3t.address)
+
+    const event = await Tick3t.createEvent("hackathon", 0);
+    console.log("New event created!", event)
 }
+
 
 main()
     .then(() => process.exit(0))
     .catch((error) => {
-        console.error(error);
-        process.exit(1);
-    });
+        console.error(error)
+        process.exit(1)
+    })
