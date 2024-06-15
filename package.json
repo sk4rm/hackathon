@@ -2,6 +2,7 @@
   "dependencies": {
     "ethers": "^6.13.0",
     "express": "^4.19.2",
+    "sqlite3": "^5.1.7",
     "zerog-da-sdk": "^0.2.2"
   }
 }
