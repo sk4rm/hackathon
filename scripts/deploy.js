@@ -11,9 +11,6 @@ async function main() {
     const Tick3tABI = await ethers.getContractFactory("Tick3t")
     const Tick3t = await Tick3tABI.deploy()
     console.log("Tick3t deployed at:", Tick3t.address)
-
-    const event = await Tick3t.createEvent("hackathon", 0);
-    console.log("New event created!", event)
 }
 
 

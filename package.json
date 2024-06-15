@@ -10,5 +10,9 @@
     "ethereum-waffle": "^4.0.10",
     "ethers": "^5.7.2",
     "hardhat": "^2.22.5"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "npx hardhat run scripts/deploy.js --network zg"
   }
 }

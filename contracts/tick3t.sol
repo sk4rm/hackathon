@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.19;
 
 contract Tick3t {
     address public owner;
@@ -18,6 +18,7 @@ contract Tick3t {
         // string date;
         // string time;
         // string location;
+        // string description;
     }
 
     struct Ticket {
@@ -26,21 +27,22 @@ contract Tick3t {
     }
 
     mapping(uint256 => Event) events;              // events[<event ID>] = that event
-    mapping(uint256 => Ticket[]) tickets;          // tickets[<event ID>] = list of tickets for that event
     mapping(address => Ticket[]) purchasedTickets; // purchasedTickets[<buyer wallet address>] = a buyer's ticket purchase history
 
 
-    function createEvent(string memory _eventName, uint256 _ticketPrice) public {
-        require(msg.sender == owner);
+    function createEvent(string memory _eventName, uint256 _ticketPrice) public returns (uint256) {
+        require(msg.sender == owner, "insufficient privileges");
 
         numEvents++;
         events[numEvents] = Event(numEvents, _eventName, _ticketPrice);
+        
+        return numEvents;
     }
 
 
     function purchaseTicket(address _buyer, uint256 _eventID) public payable {
         Event memory e = events[_eventID];
-        require(msg.value >= e.ticketPrice);
+        require(msg.value >= e.ticketPrice, "insufficient funds");
         
         purchasedTickets[_buyer].push(
             Ticket(_buyer, _eventID)
