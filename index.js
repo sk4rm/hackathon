@@ -85,7 +85,8 @@ app.get('/events/:id/attendees', async (req, res) => {
 
   const eventID = req.body.eventID
 
-  if (numEvents <= 0 || numEvents < id) {
+  const numEvents = await Tick3t.numEvents()
+  if (numEvents <= 0 || numEvents < eventID) {
     res.sendStatus(404)
     return
   }
@@ -102,16 +103,16 @@ app.get('/events/:id/attendees', async (req, res) => {
 
 app.post('/tickets', async (req, res) => {
   if (!req.body?.eventID || !req.body?.amount || !req.body?.buyer) {
-    res.status(400)
+    res.sendStatus(400)
     return
   }
 
-  const buyer = req.body.buyer
+  // const buyer = req.body.buyer
   const eventID = req.body.eventID
   const amount = req.body.amount
 
   const event = await Tick3t.getEvent(eventID)
-  const totalCost = event.ticketPrice * amount
+  // const totalCost = event.ticketPrice * amount
 
   try {
     const tx = await Tick3t.purchaseTicket(eventID, amount)

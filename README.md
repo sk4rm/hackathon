@@ -119,14 +119,59 @@ Returns:
 
 If there are no events, an empty list is returned.
 
+### GET /events/:id/attendees
+
+Description:
+
+Fetches the list of attendees (wallet addresses) for a given event.
+
+Example:
+
+```bash
+curl -X GET localhost:6969/events/1/attendees
+```
+
+Returns:
+
+```json
+[
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+]
+```
+
+
 ### POST /tickets
 
 Description:
 
-TODO
+Purchases a ticket to an event.
+
+Parameters:
+
+```json
+{
+    "eventID": 1,
+    "amount": 2,
+    "buyer": "0xcE2754e204b5c78D2dc34bA93A57c22B60A8F5CC"
+}
+```
+
+Example:
+
+```bash
+curl -H "Content-Type: application/json" \
+     -d '{"eventID": 1, "amount": 2, "buyer": "0xcE2754e204b5c78D2dc34bA93A57c22B60A8F5CC"}' \
+     -X POST \
+     localhost:6969/events
+```
+
+Returns:
+
+None if successful. HTTP 400/404 otherwise (if invalid request body or invalid eventID does not exist).
 
 ## TODO
 
-- [ ] add try-catch blocks with meaningful errors
-- [ ] get list of attendees given eventID
+- [/] add try-catch blocks with meaningful errors
+- [x] get list of attendees given eventID
 - [ ] be able to show proof of ticket purchase (how?)
+- [ ] prevent dupes from showing up in list of attendees
