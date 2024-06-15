@@ -77,7 +77,30 @@ app.get('/events/:id', async (req, res) => {
 })
 
 
-app.post("/tickets", async (req, res) => {
+app.get('/events/:id/attendees', async (req, res) => {
+  if (!req.body?.eventID) {
+    res.status(400).send('expected eventID')
+    return
+  }
+
+  const eventID = req.body.eventID
+
+  if (numEvents <= 0 || numEvents < id) {
+    res.sendStatus(404)
+    return
+  }
+
+  try {
+    const attendees = await Tick3t.getAttendees(eventID)
+    res.status(200).json(attendees)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "unable to get list of attendees" })
+  }
+})
+
+
+app.post('/tickets', async (req, res) => {
   if (!req.body?.eventID || !req.body?.amount || !req.body?.buyer) {
     res.status(400)
     return

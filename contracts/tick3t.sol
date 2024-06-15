@@ -29,6 +29,7 @@ contract Tick3t {
 
     mapping(uint256 => Event) events;              // events[<event ID>] = that event
     mapping(address => Ticket[]) purchasedTickets; // purchasedTickets[<buyer wallet address>] = a buyer's ticket purchase history
+    mapping(uint256 => address[]) attendees;       // attendees[<event ID>] = list of addresses
 
 
     function createEvent(
@@ -84,6 +85,14 @@ contract Tick3t {
             Ticket(msg.sender, _eventID, amount)
         );
 
+        attendees[_eventID].push(msg.sender);
+
         events[_eventID].ticketsSold += amount;
     }
+
+
+    function getAttendees(uint256 _eventID) public view returns (address[] memory) {    
+        return attendees[_eventID];
+    }
+
 }
