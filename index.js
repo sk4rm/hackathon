@@ -77,6 +77,31 @@ app.get('/events/:id', async (req, res) => {
 })
 
 
+app.post("/tickets", async (req, res) => {
+  if (!req.body?.eventID || !req.body?.amount || !req.body?.buyer) {
+    res.status(400)
+    return
+  }
+
+  const buyer = req.body.buyer
+  const eventID = req.body.eventID
+  const amount = req.body.amount
+
+  const event = await Tick3t.getEvent(eventID)
+  const totalCost = event.ticketPrice * amount
+
+  try {
+    const tx = await Tick3t.purchaseTicket(eventID, amount)
+    await tx.wait()
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "an error occured while purchasing tickets (could be not out-of-stock or insufficient funds)" })
+  }
+
+  res.sendStatus(200)
+})
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })

@@ -118,3 +118,15 @@ Returns:
 ```
 
 If there are no events, an empty list is returned.
+
+### POST /tickets
+
+Description:
+
+TODO
+
+## TODO
+
+- [ ] add try-catch blocks with meaningful errors
+- [ ] get list of attendees given eventID
+- [ ] be able to show proof of ticket purchase (how?)

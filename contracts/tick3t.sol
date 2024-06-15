@@ -24,6 +24,7 @@ contract Tick3t {
     struct Ticket {
         address buyer;
         uint256 eventID;
+        uint256 amount;
     }
 
     mapping(uint256 => Event) events;              // events[<event ID>] = that event
@@ -59,16 +60,6 @@ contract Tick3t {
     }
 
 
-    // function purchaseTicket(address _buyer, uint256 _eventID) public payable {
-    //     Event memory e = events[_eventID];
-    //     require(msg.value >= e.ticketPrice, "insufficient funds");
-        
-    //     purchasedTickets[_buyer].push(
-    //         Ticket(_buyer, _eventID)
-    //     );
-    // }
-
-
     function getEvent(uint256 _eventID) public view returns (Event memory) {
         return events[_eventID];
     }
@@ -80,5 +71,19 @@ contract Tick3t {
             allEvents[i - 1] = events[i];
         }
         return allEvents;
+    }
+
+
+    function purchaseTicket(uint256 _eventID, uint256 amount) public payable {
+        Event storage e = events[_eventID];
+
+        require(e.ticketsSold + amount < e.maxTickets, "tickets sold out");
+        require(msg.value < e.ticketPrice * amount, "insufficient funds");
+        
+        purchasedTickets[msg.sender].push(
+            Ticket(msg.sender, _eventID, amount)
+        );
+
+        events[_eventID].ticketsSold += amount;
     }
 }
