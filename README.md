@@ -53,7 +53,7 @@ Returns:
 
 Description:
 
-Fetches the event details.
+Fetches a single event's details.
 
 Example:
 
@@ -77,3 +77,44 @@ Returns:
 ```
 
 If the `id` does not exist, a HTTP 404 status code is returned.
+
+### GET /events/:id
+
+Description:
+
+Fetches details of all events.
+
+Example:
+
+```bash
+curl -X GET localhost:6969/events
+```
+
+Returns:
+
+```json
+[
+    {
+        "eventName": "hackathon",
+        "ticketPrice": 69, // in A0GI
+        "ticketsSold": 1,
+        "maxTickets": 100,
+        "date": "2024-06-16",
+        "time": "13:00 PDT",
+        "location": "JJ Lakes Business Center",
+        "description": "A great learning experience!"
+    },
+    {
+        "eventName": "party",
+        "ticketPrice": 0, // in A0GI
+        "ticketsSold": 50,
+        "maxTickets": 100,
+        "date": "2024-06-17",
+        "time": "10:30 PST",
+        "location": "JJ Lakes Business Center",
+        "description": "A great partying experience!"
+    },
+]
+```
+
+If there are no events, an empty list is returned.
