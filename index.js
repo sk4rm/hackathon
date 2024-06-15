@@ -56,10 +56,10 @@ app.post('/events', async (req, res) => {
 })
 
 
-// app.get('/events', async (req, res) => {
-//   const tx = await Tick3t.getAllEvents()
-//   res.status(200).json(tx)
-// })
+app.get('/events', async (req, res) => {
+  const tx = await Tick3t.getAllEvents()
+  res.status(200).json(tx)
+})
 
 
 app.get('/events/:id', async (req, res) => {

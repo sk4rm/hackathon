@@ -72,4 +72,13 @@ contract Tick3t {
     function getEvent(uint256 _eventID) public view returns (Event memory) {
         return events[_eventID];
     }
+
+
+    function getAllEvents() public view returns (Event[] memory) {
+        Event[] memory allEvents = new Event[](numEvents);
+        for (uint256 i = 1; i <= numEvents; i++) {
+            allEvents[i - 1] = events[i];
+        }
+        return allEvents;
+    }
 }
