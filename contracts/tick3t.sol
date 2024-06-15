@@ -13,12 +13,12 @@ contract Tick3t {
         uint256 id;
         string name;
         uint256 ticketPrice;
-        // uint256 ticketsSold;
-        // uint256 maxTickets;
-        // string date;
-        // string time;
-        // string location;
-        // string description;
+        uint256 ticketsSold;
+        uint256 maxTickets;
+        string date;
+        string time;
+        string location;
+        string description;
     }
 
     struct Ticket {
@@ -30,24 +30,43 @@ contract Tick3t {
     mapping(address => Ticket[]) purchasedTickets; // purchasedTickets[<buyer wallet address>] = a buyer's ticket purchase history
 
 
-    function createEvent(string memory _eventName, uint256 _ticketPrice) public returns (uint256) {
+    function createEvent(
+        string memory _eventName,
+        uint256 _ticketPrice,
+        uint256 _ticketsSold,
+        uint256 _maxTickets,
+        string memory _date,
+        string memory _time,
+        string memory _location,
+        string memory _description
+    ) public returns (uint256) {
         require(msg.sender == owner, "insufficient privileges");
 
         numEvents++;
-        events[numEvents] = Event(numEvents, _eventName, _ticketPrice);
+        events[numEvents] = Event(
+            numEvents,
+            _eventName,
+            _ticketPrice,
+            _ticketsSold,
+            _maxTickets,
+            _date,
+            _time,
+            _location,
+            _description
+        );
         
         return numEvents;
     }
 
 
-    function purchaseTicket(address _buyer, uint256 _eventID) public payable {
-        Event memory e = events[_eventID];
-        require(msg.value >= e.ticketPrice, "insufficient funds");
+    // function purchaseTicket(address _buyer, uint256 _eventID) public payable {
+    //     Event memory e = events[_eventID];
+    //     require(msg.value >= e.ticketPrice, "insufficient funds");
         
-        purchasedTickets[_buyer].push(
-            Ticket(_buyer, _eventID)
-        );
-    }
+    //     purchasedTickets[_buyer].push(
+    //         Ticket(_buyer, _eventID)
+    //     );
+    // }
 
 
     function getEvent(uint256 _eventID) public view returns (Event memory) {

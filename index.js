@@ -24,12 +24,30 @@ app.get('/', (req, res) => {
 app.post('/events', async (req, res) => {
   // Check for POST parameters
   console.log(req.body)
-  if (!req.body?.eventName || !req.body?.ticketPrice) {
+  if (
+    !req.body?.eventName ||
+    !req.body?.ticketPrice ||
+    !req.body?.ticketsSold ||
+    !req.body?.maxTickets ||
+    !req.body?.date ||
+    !req.body?.time ||
+    !req.body?.location ||
+    !req.body?.description
+  ) {
     res.sendStatus(400)
     return
   }
 
-  const tx = await Tick3t.createEvent("hackathon", 69)
+  const tx = await Tick3t.createEvent(
+    req.body.eventName,
+    req.body.ticketPrice,
+    req.body.ticketsSold,
+    req.body.maxTickets,
+    req.body.date,
+    req.body.time,
+    req.body.location,
+    req.body.description
+  )
   await tx.wait()
   const latestEventID = await Tick3t.numEvents()
   const event = await Tick3t.getEvent(latestEventID)

@@ -38,9 +38,14 @@ Returns:
 
 ```json
 {
-    "id": 69,
-    "name": "hackathon 2024",
-    "ticketPrice": 1 // in A0GI
+    "eventName": "hackathon",
+    "ticketPrice": 69, // in A0GI
+    "ticketsSold": 1,
+    "maxTickets": 100,
+    "date": "2024-06-16",
+    "time": "13:00 PDT",
+    "location": "JJ Lakes Business Center",
+    "description": "A great learning experience!"
 }
 ```
 
@@ -60,9 +65,14 @@ Returns:
 
 ```json
 {
-    "id": 1,
-    "name": "hackathon 2024",
-    "ticketPrice": 1 // in A0GI
+    "eventName": "hackathon",
+    "ticketPrice": 69, // in A0GI
+    "ticketsSold": 1,
+    "maxTickets": 100,
+    "date": "2024-06-16",
+    "time": "13:00 PDT",
+    "location": "JJ Lakes Business Center",
+    "description": "A great learning experience!"
 }
 ```
 
