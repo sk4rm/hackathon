@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 contract Tick3t {
     address public owner;
     uint256 public numEvents;
+    uint256 public numUsers;
 
     constructor() {
         owner = msg.sender;
@@ -27,9 +28,16 @@ contract Tick3t {
         uint256 amount;
     }
 
+    struct User {
+        string name;
+        string bio;
+        string imageURL;
+    }
+
     mapping(uint256 => Event) events;              // events[<event ID>] = that event
     mapping(address => Ticket[]) purchasedTickets; // purchasedTickets[<buyer wallet address>] = a buyer's ticket purchase history
     mapping(uint256 => address[]) attendees;       // attendees[<event ID>] = list of addresses
+    mapping(address => User) users;                // users[<wallet address>] = user with that address
 
 
     function createEvent(
@@ -95,4 +103,15 @@ contract Tick3t {
         return attendees[_eventID];
     }
 
+
+    function createUser(address _address, string memory _name, string memory _bio, string memory _imageURL) public returns (User memory) {
+        numUsers++;
+        users[_address] = User(_name, _bio, _imageURL);
+        return users[_address];
+    }
+
+
+    function getUser(address _address) public view returns (User memory) {
+        return users[_address];
+    }
 }

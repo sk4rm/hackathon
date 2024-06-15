@@ -126,6 +126,42 @@ app.post('/tickets', async (req, res) => {
 })
 
 
+app.post('/users', async (req, res) => {
+  if (!req.body?.address || !req.body?.name || !req.body?.bio || !req.body?.imageURL) {
+    res.sendStatus(400)
+    return
+  }
+
+  const address = req.body.address
+  const name = req.body.name
+  const bio = req.body.bio
+  const imageURL = req.body.imageURL
+
+  try {
+    const tx = await Tick3t.createUser(address, name, bio, imageURL)
+    await tx.wait()
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "unable to create new user account" })
+  }
+
+  res.sendStatus(200)
+})
+
+
+app.get('/users/:address', async (req, res) => {
+  const address = req.params.address
+
+  try {
+    const tx = await Tick3t.getUser(address)
+    res.status(200).json(tx)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "unable to retrieve user information (might or might not exist)" })
+  }
+})
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })

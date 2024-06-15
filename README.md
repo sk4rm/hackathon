@@ -169,9 +169,51 @@ Returns:
 
 None if successful. HTTP 400/404 otherwise (if invalid request body or invalid eventID does not exist).
 
+### POST /users
+
+Description:
+
+Creates a new user with the specified wallet address.
+
+Example:
+
+```bash
+curl -H "Content-Type: application/json" \
+     -d '{"address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", "name": "Susan", "bio":  "sunshine and rainbows :)", "imageURL": "https://example.com"}' \
+     -X POST \
+     localhost:6969/events
+```
+
+Returns:
+
+None
+
+### GET /users/:address
+
+Example:
+
+```bash
+curl -X GET localhost:6969/users/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+```
+
+Returns:
+
+```json
+[
+    "Susan",
+    "sunshine and rainbows :)",
+    "https://example.com"
+]
+```
+
+
 ## TODO
 
 - [/] add try-catch blocks with meaningful errors
 - [x] get list of attendees given eventID
 - [ ] be able to show proof of ticket purchase (how?)
 - [ ] prevent dupes from showing up in list of attendees
+- [x] POST /users
+- [x] GET /users/:id
+- [ ] POST /messages
+- [ ] GET /messages/:userID
