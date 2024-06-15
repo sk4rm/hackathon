@@ -38,6 +38,27 @@ app.post('/events', async (req, res) => {
 })
 
 
+// app.get('/events', async (req, res) => {
+//   const tx = await Tick3t.getAllEvents()
+//   res.status(200).json(tx)
+// })
+
+
+app.get('/events/:id', async (req, res) => {
+  const id = req.params.id
+
+  // Check if valid ID (less than numEvents in contract)
+  const numEvents = await Tick3t.numEvents()
+  if (numEvents <= 0 || numEvents < id) {
+    res.sendStatus(404)
+    return
+  }
+
+  const tx = await Tick3t.getEvent(id)
+  res.status(200).json(tx)
+})
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })
