@@ -160,8 +160,3 @@ app.get('/users/:address', async (req, res) => {
     res.status(500).json({ error: "unable to retrieve user information (might or might not exist)" })
   }
 })
-
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`)
-})
